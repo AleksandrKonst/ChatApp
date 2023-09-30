@@ -17,7 +17,7 @@ class SignInActivity : AppCompatActivity() {
     fun logIn(view: View?) {
         var emailText = findViewById(R.id.emailText) as EditText
         var passwordText = findViewById(R.id.passwordText) as EditText
-        if (!emailText.text.isValidEmail()) {
+        if (!emailText.text.isValidEmail() || emailText.text.length > 30) {
             Toast.makeText(this, "Неверный Email", Toast.LENGTH_SHORT).show();
         } else if (passwordText.text.isNullOrEmpty() || passwordText.text.length > 20) {
             Toast.makeText(this, "Введите пароль", Toast.LENGTH_SHORT).show();
