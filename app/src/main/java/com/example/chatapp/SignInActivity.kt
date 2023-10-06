@@ -12,6 +12,7 @@ import com.example.chatapp.Service.isValidPassword
 
 class SignInActivity : AppCompatActivity() {
     private val TAG : String = "SignInActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -25,6 +26,8 @@ class SignInActivity : AppCompatActivity() {
 
         emailText.setText(email)
         passwordText.setText(password)
+
+        Log.d(TAG, "onCreate")
     }
 
     override fun onDestroy() {
