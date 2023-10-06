@@ -11,7 +11,6 @@ import com.example.chatapp.Data.User
 import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidPassword
 
-
 class SignInActivity : AppCompatActivity() {
     private val TAG : String = "SignInActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
