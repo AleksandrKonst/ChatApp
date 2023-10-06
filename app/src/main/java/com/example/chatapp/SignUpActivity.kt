@@ -2,6 +2,7 @@ package com.example.chatapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -11,11 +12,13 @@ import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidName
 import com.example.chatapp.Service.isValidPassword
 
-
 class SignUpActivity : AppCompatActivity() {
+    private val TAG : String = "SignUpActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        Log.d(TAG, "onCreate")
     }
 
     fun signUp(view: View?) {
