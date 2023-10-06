@@ -2,23 +2,22 @@ package com.example.chatapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
-class HomeActivity : AppCompatActivity() {
-    private val TAG : String = "HomeActivity"
+class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
+    private val TAG : String = "OnboardFragment"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        arguments?.let {
+            val nameText = view.findViewById<TextView>(R.id.textView)
+            nameText.setText(requireArguments().getString("name"))
+        }
+        Log.d(TAG, "SignUpCreated")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-
-        var nameText = findViewById(R.id.textView) as TextView
-        val name = intent.getStringExtra("name")
-        nameText.setText(name)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
+        Log.d(TAG, "onCreate")
     }
 
     override fun onStop() {
@@ -39,10 +38,5 @@ class HomeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.d(TAG, "onRestart")
     }
 }
