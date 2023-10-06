@@ -1,14 +1,19 @@
 package com.example.chatapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class HomeActivity : AppCompatActivity() {
     private val TAG : String = "HomeActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        var nameText = findViewById(R.id.textView) as TextView
+        val name = intent.getStringExtra("name")
+        nameText.setText(name)
     }
 
     override fun onDestroy() {
