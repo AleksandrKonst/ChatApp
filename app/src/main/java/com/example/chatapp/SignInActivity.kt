@@ -3,11 +3,12 @@ package com.example.chatapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatapp.Service.isValidEmail
+import com.example.chatapp.Service.isValidPassword
 
 class SignInActivity : AppCompatActivity() {
     private val TAG : String = "SignInActivity"
@@ -24,10 +25,6 @@ class SignInActivity : AppCompatActivity() {
 
         emailText.setText(email)
         passwordText.setText(password)
-
-        if (name != null) {
-            Log.d(TAG, name)
-        }
     }
 
     override fun onDestroy() {
@@ -63,10 +60,10 @@ class SignInActivity : AppCompatActivity() {
     fun logIn(view: View?) {
         var emailText = findViewById(R.id.emailText) as EditText
         var passwordText = findViewById(R.id.passwordText) as EditText
-        if (!emailText.text.isValidEmail() || emailText.text.length > 30) {
-            Toast.makeText(this, "Неверный Email", Toast.LENGTH_SHORT).show();
-        } else if (passwordText.text.isNullOrEmpty() || passwordText.text.length > 20) {
-            Toast.makeText(this, "Введите пароль", Toast.LENGTH_SHORT).show();
+        if (!emailText.text.isValidEmail()) {
+            Toast.makeText(this, "Введите корректный Email", Toast.LENGTH_SHORT).show();
+        } else if (!passwordText.text.isValidPassword()) {
+            Toast.makeText(this, "Введите корректный пароль", Toast.LENGTH_SHORT).show();
         }
         else {
             val intent = Intent(this, HomeActivity::class.java)
@@ -78,6 +75,4 @@ class SignInActivity : AppCompatActivity() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
-
-    fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
