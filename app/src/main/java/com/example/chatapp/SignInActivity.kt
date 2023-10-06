@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatapp.Data.User
 import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidPassword
+
 
 class SignInActivity : AppCompatActivity() {
     private val TAG : String = "SignInActivity"
@@ -19,12 +21,21 @@ class SignInActivity : AppCompatActivity() {
         var emailText = findViewById(R.id.emailText) as EditText
         var passwordText = findViewById(R.id.passwordText) as EditText
 
-        val name = intent.getStringExtra("name")
-        val email = intent.getStringExtra("email")
-        val password = intent.getStringExtra("password")
+//        val name = intent.getStringExtra("name")
+//        val email = intent.getStringExtra("email")
+//        val password = intent.getStringExtra("password")
+//
+//        emailText.setText(email)
+//        passwordText.setText(password)
 
-        emailText.setText(email)
-        passwordText.setText(password)
+        val user : User? = intent.getParcelableExtra("user")
+
+        if (user != null) {
+            emailText.setText(user.email)
+            passwordText.setText(user.password)
+
+            Toast.makeText(this, "${user.name} успешно зарегестрирован", Toast.LENGTH_SHORT).show();
+        }
     }
 
     override fun onDestroy() {
