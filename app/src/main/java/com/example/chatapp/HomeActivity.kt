@@ -14,6 +14,8 @@ class HomeActivity : AppCompatActivity() {
         var nameText = findViewById(R.id.textView) as TextView
         val name = intent.getStringExtra("name")
         nameText.setText(name)
+
+        Log.d(TAG, "onCreate")
     }
 
     override fun onDestroy() {

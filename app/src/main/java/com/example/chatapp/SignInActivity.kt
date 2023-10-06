@@ -14,6 +14,7 @@ import com.example.chatapp.Service.isValidPassword
 class SignInActivity : AppCompatActivity() {
     private val TAG : String = "SignInActivity"
     private var userName : String? = "Aleksandr Konstantinov"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -30,6 +31,8 @@ class SignInActivity : AppCompatActivity() {
 
             Toast.makeText(this, "${user.name} успешно зарегестрирован", Toast.LENGTH_SHORT).show();
         }
+
+        Log.d(TAG, "onCreate")
     }
 
     override fun onDestroy() {
