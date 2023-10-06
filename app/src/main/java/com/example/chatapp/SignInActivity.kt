@@ -21,13 +21,6 @@ class SignInActivity : AppCompatActivity() {
         var emailText = findViewById(R.id.emailText) as EditText
         var passwordText = findViewById(R.id.passwordText) as EditText
 
-//        val name = intent.getStringExtra("name")
-//        val email = intent.getStringExtra("email")
-//        val password = intent.getStringExtra("password")
-//
-//        emailText.setText(email)
-//        passwordText.setText(password)
-
         val user : User? = intent.getParcelableExtra("user")
 
         if (user != null) {

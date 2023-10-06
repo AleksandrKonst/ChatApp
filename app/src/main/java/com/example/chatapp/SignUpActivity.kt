@@ -32,10 +32,6 @@ class SignUpActivity : AppCompatActivity() {
         else {
             val intent = Intent(this, SignInActivity::class.java)
 
-            intent.putExtra("name", nameText.text.toString());
-            intent.putExtra("email", emailText.text.toString());
-            intent.putExtra("password", passwordText.text.toString());
-
             val user = User(nameText.text.toString(), emailText.text.toString(), passwordText.text.toString())
             intent.putExtra("user", user)
 
