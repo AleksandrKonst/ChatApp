@@ -6,9 +6,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chatapp.Data.User
 import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidName
 import com.example.chatapp.Service.isValidPassword
+
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +33,8 @@ class SignUpActivity : AppCompatActivity() {
         else {
             val intent = Intent(this, SignInActivity::class.java)
 
-            intent.putExtra("name", nameText.text.toString());
-            intent.putExtra("email", emailText.text.toString());
-            intent.putExtra("password", passwordText.text.toString());
+            val user = User(nameText.text.toString(), emailText.text.toString(), passwordText.text.toString())
+            intent.putExtra("user", user)
 
             startActivity(intent)
         }
