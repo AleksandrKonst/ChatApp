@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
-    private val TAG : String = "OnboardFragment"
+    private val TAG : String = "SignUpFragment"
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
             val nameText = view.findViewById<TextView>(R.id.textView)
