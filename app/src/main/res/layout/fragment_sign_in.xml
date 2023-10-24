@@ -77,7 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="464dp"
         android:fontFamily="@font/alata"
-        android:onClick="navigateToSignUp"
         android:text="Registration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -85,13 +84,12 @@
         app:layout_constraintTop_toTopOf="@+id/background" />
 
     <Button
-        android:id="@+id/elevatedButton"
+        android:id="@+id/signUpButton"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="496dp"
         android:fontFamily="@font/alata"
-        android:onClick="navigateToHome"
         android:text="Log In"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
