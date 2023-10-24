@@ -14,7 +14,6 @@ import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidPassword
 import com.example.chatapp.databinding.FragmentSignInBinding
 
-
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private val TAG : String = "SignInFragment"
     private var _binding: FragmentSignInBinding? = null
