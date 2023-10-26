@@ -1,10 +1,10 @@
 # ChatApp
 
-![all](https://github.com/AleksandrKonst/ChatApp/assets/40522320/3b24ba5c-d5da-4abc-a19c-0ab65dbd8763)
+![all](https://github.com/AleksandrKonst/ChatApp/assets/40522320/a26fbba6-a40a-41bf-99ae-898a5cd10d20)
 
 # Single Page
-![image](https://github.com/AleksandrKonst/ChatApp/assets/40522320/83fa4463-2258-4945-80b9-9ab98a7eafd1)
+![image](https://github.com/AleksandrKonst/ChatApp/assets/40522320/e19323a4-565f-4dce-b223-8fe779e4e1d8)
 
-![image](https://github.com/AleksandrKonst/ChatApp/assets/40522320/0574ac06-93e4-4c1b-b433-10d74ee6f910)
+![image](https://github.com/AleksandrKonst/ChatApp/assets/40522320/15cf5be9-52df-4d90-9f4f-76b03a91e492)
 
-![image](https://github.com/AleksandrKonst/ChatApp/assets/40522320/420e86ba-ae05-4b1a-9ee7-c6e4e500ae23)
+![image](https://github.com/AleksandrKonst/ChatApp/assets/40522320/138a07c8-632d-49cc-b993-32eb952e8be8)
