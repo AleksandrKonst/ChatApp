@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.databinding.FragmentOnboardBinding
 
 class OnboardFragment : Fragment(R.layout.fragment_onboard) {
@@ -33,11 +32,8 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "onViewCreated")
         binding.elevatedButton.setOnClickListener {
-            parentFragmentManager.commit {
-                replace<SignInFragment>(R.id.fragmentContainerView)
-                setReorderingAllowed(true)
-                addToBackStack("Onboard")
-            }
+            val action = OnboardFragmentDirections.actionOnboardFragmentToSignInFragment()
+            this.findNavController().navigate(action)
         }
     }
 

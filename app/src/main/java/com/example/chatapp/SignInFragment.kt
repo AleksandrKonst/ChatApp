@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidPassword
 import com.example.chatapp.databinding.FragmentSignInBinding
@@ -18,6 +17,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private val TAG : String = "SignInFragment"
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
+    private val args: SignInFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,18 +35,13 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        arguments?.let {
-            binding.emailText.setText(requireArguments().getString("email"))
-            binding.passwordText.setText(requireArguments().getString("password"))
-            Log.d(TAG, "onViewCreated")
-        }
+        binding.emailText.setText(args.email)
+        binding.passwordText.setText(args.password)
+        Log.d(TAG, "onViewCreated")
 
         binding.registration.setOnClickListener {
-            parentFragmentManager.commit {
-                replace<SignUpFragment>(R.id.fragmentContainerView)
-                setReorderingAllowed(true)
-                addToBackStack("SignIn")
-            }
+            val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
+            this.findNavController().navigate(action)
         }
 
         binding.signUpButton.setOnClickListener {
@@ -56,12 +51,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 Toast.makeText(this.activity, "Введите корректный пароль", Toast.LENGTH_SHORT).show();
             }
             else {
-                val bundle = bundleOf("name" to "Aleksandr Konstantinov")
-
-                parentFragmentManager.commit {
-                    replace<HomeFragment>(R.id.fragmentContainerView, args = bundle)
-                    setReorderingAllowed(true)
-                }
+                val action = SignInFragmentDirections.actionSignInFragmentToHomeFragment(args.name)
+                this.findNavController().navigate(action)
             }
         }
     }

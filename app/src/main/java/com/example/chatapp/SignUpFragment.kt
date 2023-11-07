@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidName
 import com.example.chatapp.Service.isValidPassword
@@ -46,12 +44,8 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 Toast.makeText(this.activity, "Введите корректный пароль", Toast.LENGTH_SHORT).show()
             }
             else {
-                val bundle = bundleOf("name" to binding.nameText.text.toString(), "email" to binding.emailText.text.toString(), "password" to binding.passwordText.text.toString())
-
-                parentFragmentManager.commit {
-                    replace<SignInFragment>(R.id.fragmentContainerView, args = bundle)
-                    setReorderingAllowed(true)
-                }
+                val action = SignUpFragmentDirections.actionSignUpFragmentToSignInFragment2(binding.emailText.text.toString(), binding.passwordText.text.toString(), binding.nameText.text.toString())
+                this.findNavController().navigate(action)
 
                 Toast.makeText(this.activity, "${binding.nameText.text} успешно зарегестрирован", Toast.LENGTH_SHORT).show();
             }
