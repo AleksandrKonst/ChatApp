@@ -5,16 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.chatapp.Presentation.ApiResponseAdapter
+import com.example.chatapp.Service.Network.KtorRepository
 import com.example.chatapp.databinding.FragmentHomeBinding
-import com.example.chatapp.databinding.FragmentOnboardBinding
-
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val TAG : String = "HomeFragment"
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private var _ktorApi: KtorRepository? = null
+    private val ktorApi get() = _ktorApi!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +26,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _ktorApi = KtorRepository()
         val view = binding.root
         return view
     }
@@ -35,6 +40,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.textView.setText(requireArguments().getString("name"))
         }
         Log.d(TAG, "onViewCreated")
+
+        lifecycleScope.launch {
+            val users = ktorApi.getCharacters()
+            binding.characterList.adapter = ApiResponseAdapter(users)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
