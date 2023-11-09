@@ -32,12 +32,12 @@ class ApiResponseAdapter(private var items: List<Character>) :
 
         fun bind(character: Character) {
             with(binding) {
-                nameTextView.text = character.name ?: "-"
-                cultureTextView.text = character.culture ?: "-"
-                bornTextView.text = character.born ?: "-"
-                aliasesTextView.text = character.aliases.joinToString(", ")
-                titlesTextView.text = character.titles.joinToString(", ")
-                playedByNameTextView.text = character.playedBy.joinToString(", ")
+                nameTextView.text = if (character.name != "") character.name else "-"
+                cultureTextView.text = if (character.culture != "") character.culture else "-"
+                bornTextView.text = if (character.born != "") character.born else "-"
+                aliasesTextView.text = if (character.aliases.joinToString(", ") != "") character.aliases.joinToString(", ") else "-"
+                titlesTextView.text = if (character.titles.joinToString(", ") != "") character.titles.joinToString(", ") else "-"
+                playedByNameTextView.text = if (character.playedBy.joinToString(", ") != "") character.playedBy.joinToString(", ") else "-"
             }
         }
     }
