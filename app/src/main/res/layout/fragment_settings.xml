@@ -21,45 +21,18 @@
         android:id="@+id/whitePanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/rectangle_rounded_some" />
 
-    <Button
-        android:id="@+id/saveInDataStore"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="178dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="88dp"
-        android:text="Сохранить в Data Store"
-        android:textColor="#5A5A5A"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/darkSwitch" />
-
-    <Button
-        android:id="@+id/saveInSharedPreferences"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="178dp"
-        android:layout_height="58dp"
-        android:text="Сохранить в Shared Preferences"
-        android:textColor="#5A5A5A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saveInDataStore"
-        app:layout_constraintVertical_bias="0.119" />
-
     <TextView
         android:id="@+id/name"
         android:layout_width="170dp"
         android:layout_height="58dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="144dp"
         android:fontFamily="@font/alata"
         android:text="Settings"
         android:textAlignment="center"
@@ -67,22 +40,35 @@
         android:textColor="#5A5A5A"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveInDataStore"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="178dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="72dp"
+        android:text="Сохранить в Data Store"
+        android:textColor="#5A5A5A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/darkSwitch" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/addressField"
         android:layout_width="288dp"
         android:layout_height="69dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="200dp"
         android:hint="Address"
         app:boxStrokeColor="@color/black"
         app:counterEnabled="true"
         app:counterMaxLength="30"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -109,10 +95,10 @@
         android:textColor="#5A5A5A"
         app:layout_constraintBottom_toTopOf="@+id/pushSwitch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailField"
-        app:layout_constraintVertical_bias="0.571"
+        app:layout_constraintVertical_bias="0.75"
         app:thumbTint="@color/white"
         app:trackDecorationTint="@color/grey"
         app:trackTint="@color/grey" />
@@ -121,30 +107,75 @@
         android:id="@+id/pushSwitch"
         android:layout_width="194dp"
         android:layout_height="50dp"
-        android:layout_marginTop="524dp"
+        android:layout_marginTop="444dp"
         android:checked="true"
         android:text="Уведомления"
         android:textColor="#5A5A5A"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:thumbTint="@color/white"
         app:trackDecorationTint="@color/grey"
         app:trackTint="@color/grey" />
 
+    <Button
+        android:id="@+id/saveInSharedPreferences"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="178dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="12dp"
+        android:text="Сохранить в Shared Preferences"
+        android:textColor="#5A5A5A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveInDataStore" />
+
+    <Button
+        android:id="@+id/deleteFile"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="178dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="12dp"
+        android:text="Удалить файл"
+        android:textColor="#5A5A5A"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/whitePanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveInSharedPreferences"
+        app:layout_constraintVertical_bias="0.021" />
+
+    <Button
+        android:id="@+id/restoreFile"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="178dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="12dp"
+        android:text="Востановить файл"
+        android:textColor="#5A5A5A"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/whitePanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveInSharedPreferences"
+        app:layout_constraintVertical_bias="0.021" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailField"
         android:layout_width="288dp"
         android:layout_height="69dp"
-        android:layout_marginTop="368dp"
+        android:layout_marginTop="288dp"
         android:hint="Second Email"
         app:boxStrokeColor="@color/black"
         app:counterEnabled="true"
         app:counterMaxLength="30"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

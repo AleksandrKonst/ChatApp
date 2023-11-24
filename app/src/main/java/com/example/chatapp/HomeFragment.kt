@@ -1,7 +1,7 @@
 package com.example.chatapp
 
+import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,19 +9,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.chatapp.Data.Character
 import com.example.chatapp.Presentation.ApiResponseAdapter
 import com.example.chatapp.Service.Network.KtorRepository
+import com.example.chatapp.Service.StorageService
 import com.example.chatapp.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
-import java.io.File
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val TAG : String = "HomeFragment"
+    private val fileName : String = "characterList_11.txt"
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     private var _ktorApi: KtorRepository? = null
     private val ktorApi get() = _ktorApi!!
+    private lateinit var users : List<Character>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,11 +40,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onDestroyView()
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
             binding.textView.setText(requireArguments().getString("name"))
         }
-        Log.d(TAG, "onViewCreated")
+        if (StorageService.isFileInDownloads(fileName) ||
+            StorageService.isFileInInternalStorage(requireContext(), "characterList_11.txt")){
+            binding.load.visibility = View.INVISIBLE
+        }
+
+        binding.loadButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                StorageService.saveToDownloads(requireContext(), fileName, users.joinToString("; "))
+            }
+            else {
+                StorageService.saveToDownloads(fileName, users.joinToString("; "))
+            }
+            binding.load.visibility = View.INVISIBLE
+        }
 
         binding.settingsButton.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
@@ -50,18 +66,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         lifecycleScope.launch {
-            val users = ktorApi.getCharacters()
+            users = ktorApi.getCharacters()
             binding.characterList.adapter = ApiResponseAdapter(users)
         }
-    }
-
-    private fun isExternalStorageWritable(): Boolean {
-        return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
-    }
-
-    private fun isExternalStorageReadable(): Boolean {
-        return Environment.getExternalStorageState() in
-                setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+        Log.d(TAG, "onViewCreated")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

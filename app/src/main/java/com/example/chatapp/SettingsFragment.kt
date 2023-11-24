@@ -2,6 +2,7 @@ package com.example.chatapp
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,13 +12,14 @@ import android.view.ViewGroup
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import com.example.chatapp.Service.StorageService
 import com.example.chatapp.databinding.FragmentSettingsBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class SettingsFragment : Fragment() {
+    private val TAG : String = "SettingsFragment"
+    private val fileName : String = "characterList_11.txt"
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var sharedPref: SharedPreferences
@@ -30,6 +32,35 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (StorageService.isFileInDownloads(fileName)){
+            binding.deleteFile.visibility = View.VISIBLE
+        } else if (StorageService.isFileInInternalStorage(requireContext(), fileName)){
+            binding.restoreFile.visibility = View.VISIBLE
+        }
+
+        binding.deleteFile.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                StorageService.moveFileToInternalStorage(requireContext(), fileName)
+                StorageService.deleteFileFromDownloads(requireContext(), fileName)
+
+                binding.deleteFile.visibility = View.INVISIBLE
+                binding.restoreFile.visibility = View.VISIBLE
+            }
+            else {
+                StorageService.moveFileToInternalStorage(requireContext(), fileName)
+                StorageService.deleteFileFromDownloads(fileName)
+
+                binding.deleteFile.visibility = View.INVISIBLE
+                binding.restoreFile.visibility = View.VISIBLE
+            }
+        }
+        binding.restoreFile.setOnClickListener {
+            StorageService.moveFileToDownloads(requireContext(), fileName)
+            if (StorageService.isFileInDownloads(fileName)){
+                binding.restoreFile.visibility = View.INVISIBLE
+                binding.deleteFile.visibility = View.VISIBLE
+            }
+        }
         binding.saveInDataStore.setOnClickListener {
             lifecycleScope.launch {
                 save("secondEmail", binding.emailText.text.toString())
@@ -89,5 +120,25 @@ class SettingsFragment : Fragment() {
 
     private fun readSharedPreferences(key: String): String? {
         return sharedPref.getString(key, null)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
     }
 }

@@ -32,12 +32,12 @@ class ApiResponseAdapter(private var items: List<Character>) :
 
         fun bind(character: Character) {
             with(binding) {
-                nameTextView.text = if (character.name != "") character.name else "-"
-                cultureTextView.text = if (character.culture != "") character.culture else "-"
-                bornTextView.text = if (character.born != "") character.born else "-"
-                aliasesTextView.text = if (character.aliases.joinToString(", ") != "") character.aliases.joinToString(", ") else "-"
-                titlesTextView.text = if (character.titles.joinToString(", ") != "") character.titles.joinToString(", ") else "-"
-                playedByNameTextView.text = if (character.playedBy.joinToString(", ") != "") character.playedBy.joinToString(", ") else "-"
+                nameTextView.text = if (character.name != "") character.name else "Нет данных"
+                cultureTextView.text = "[culture] " + if (character.culture != "") character.culture else "Нет данных"
+                bornTextView.text = "[born] " + if (character.born != "") character.born else "Нет данных"
+                aliasesTextView.text = "[titles] " + if (character.aliases.joinToString(", ") != "") character.aliases.joinToString(", ") else "Нет данных"
+                titlesTextView.text = "[aliases] " + if (character.titles.joinToString(", ") != "") character.titles.joinToString(", ") else "Нет данных"
+                playedByNameTextView.text = "[playedBy] " + if (character.playedBy.joinToString(", ") != "") character.playedBy.joinToString(", ") else "Нет данных"
             }
         }
     }
