@@ -1,0 +1,93 @@
+package com.example.chatapp
+
+import android.content.Context
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.chatapp.databinding.FragmentSettingsBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+
+class SettingsFragment : Fragment() {
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var sharedPref: SharedPreferences
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedPref = requireActivity().getSharedPreferences(
+            "CHAT_APPLICATION",
+            Context.MODE_PRIVATE
+        )
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.saveInDataStore.setOnClickListener {
+            lifecycleScope.launch {
+                save("secondEmail", binding.emailText.text.toString())
+                save("darkTheme", binding.darkSwitch.isChecked.toString())
+            }
+        }
+        binding.saveInSharedPreferences.setOnClickListener {
+            lifecycleScope.launch {
+                saveSharedPreferences("address", binding.addressText.text.toString())
+                saveSharedPreferences("push", binding.pushSwitch.isChecked.toString())
+            }
+        }
+        lifecycleScope.launch {
+            binding.emailText.setText(read("secondEmail"))
+            binding.addressText.setText(readSharedPreferences("address"))
+            binding.darkSwitch.isChecked = read("darkTheme").toBoolean()
+            binding.pushSwitch.isChecked = readSharedPreferences("push").toBoolean()
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private suspend fun save(key: String, data: String) {
+        Log.d("save with datastore", "key: $key, value: $data")
+        val dataStoreKey = stringPreferencesKey(key)
+        requireActivity().dataStore.edit { settings ->
+            settings[dataStoreKey] = data
+        }
+    }
+
+    private suspend fun read(key: String): String? {
+        Log.d("read with datastore", "key: $key")
+        val dataStoreKey = stringPreferencesKey(key)
+        val preferences = requireActivity().dataStore.data.first()
+        return preferences[dataStoreKey]
+    }
+
+    private fun saveSharedPreferences(key: String, data: String) {
+        with(sharedPref.edit()) {
+            putString(key, data)
+            apply()
+        }
+    }
+
+    private fun readSharedPreferences(key: String): String? {
+        return sharedPref.getString(key, null)
+    }
+}
