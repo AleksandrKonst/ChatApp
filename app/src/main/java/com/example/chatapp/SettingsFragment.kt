@@ -96,6 +96,26 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
     private suspend fun save(key: String, data: String) {
         Log.d("save with datastore", "key: $key, value: $data")
         val dataStoreKey = stringPreferencesKey(key)
@@ -120,25 +140,5 @@ class SettingsFragment : Fragment() {
 
     private fun readSharedPreferences(key: String): String? {
         return sharedPref.getString(key, null)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume")
     }
 }
