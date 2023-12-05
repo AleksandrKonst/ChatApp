@@ -1,7 +1,7 @@
 package com.example.chatapp.Service.Network
 
 import android.util.Log
-import com.example.chatapp.Data.Character
+import com.example.chatapp.Data.CharacterDTO
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -14,7 +14,6 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.ktor.http.URLProtocol
-import io.ktor.http.append
 import io.ktor.http.contentType
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
@@ -45,7 +44,7 @@ class KtorRepository : IKtorRepository {
         }
     }
 
-    override suspend fun getCharacters(): List<Character> {
+    override suspend fun getCharacters(): List<CharacterDTO> {
         return try {
             client.get {
                 url {

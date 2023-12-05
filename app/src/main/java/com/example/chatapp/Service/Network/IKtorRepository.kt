@@ -1,7 +1,7 @@
 package com.example.chatapp.Service.Network
 
-import com.example.chatapp.Data.Character
+import com.example.chatapp.Data.CharacterDTO
 
 interface IKtorRepository {
-    suspend fun getCharacters(): List<Character>
+    suspend fun getCharacters(): List<CharacterDTO>
 }

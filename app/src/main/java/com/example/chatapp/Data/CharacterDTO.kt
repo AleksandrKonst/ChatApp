@@ -3,7 +3,7 @@ package com.example.chatapp.Data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Character (
+data class CharacterDTO (
     val name: String? = null,
     val culture: String? = null,
     val born: String? = null,

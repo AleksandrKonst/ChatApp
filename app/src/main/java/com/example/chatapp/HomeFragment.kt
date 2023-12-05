@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.chatapp.Data.Character
+import com.example.chatapp.Data.CharacterDTO
 import com.example.chatapp.Presentation.ApiResponseAdapter
 import com.example.chatapp.Service.Network.KtorRepository
 import com.example.chatapp.Service.StorageService
@@ -23,7 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
     private var _ktorApi: KtorRepository? = null
     private val ktorApi get() = _ktorApi!!
-    private lateinit var users : List<Character>
+    private lateinit var users : List<CharacterDTO>
 
     override fun onCreateView(
         inflater: LayoutInflater,
