@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Person(
     @PrimaryKey val uid: Int,
+    val number: Int,
     val name: String?,
     val culture: String?,
     val born: String?,

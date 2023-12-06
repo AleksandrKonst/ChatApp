@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.chatapp.Models.getDatabase
+import com.example.chatapp.Repository.PersonRepository
 import com.example.chatapp.Service.isValidEmail
 import com.example.chatapp.Service.isValidPassword
 import com.example.chatapp.databinding.FragmentSignInBinding
@@ -18,6 +20,9 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
     private val args: SignInFragmentArgs by navArgs()
+
+    private val personsRepository = PersonRepository(getDatabase(requireContext()))
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
