@@ -21,9 +21,6 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private val binding get() = _binding!!
     private val args: SignInFragmentArgs by navArgs()
 
-    private val personsRepository = PersonRepository(getDatabase(requireContext()))
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +40,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
         binding.emailText.setText(args.email)
         binding.passwordText.setText(args.password)
         Log.d(TAG, "onViewCreated")
+
+        val personsRepository = PersonRepository(getDatabase(requireContext().applicationContext))
 
         binding.registration.setOnClickListener {
             val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()

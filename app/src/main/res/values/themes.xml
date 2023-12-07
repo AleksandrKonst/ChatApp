@@ -6,6 +6,5 @@
         <item name="colorPrimaryDark">@color/material_dynamic_primary0</item>
         <item name="colorPrimary">@color/material_dynamic_primary0</item>
     </style>
-
     <style name="Theme.ChatApp" parent="Base.Theme.ChatApp" />
 </resources>

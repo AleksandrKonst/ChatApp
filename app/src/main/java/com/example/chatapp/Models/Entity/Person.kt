@@ -10,7 +10,7 @@ data class Person(
     val name: String?,
     val culture: String?,
     val born: String?,
-    val titles: ArrayList<String>,
-    val aliases: ArrayList<String>,
-    val playedBy: ArrayList<String>
+    val titles: String?,
+    val aliases: String?,
+    val playedBy: String?
 )
