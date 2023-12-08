@@ -106,14 +106,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             else {
                 job = lifecycleScope.launch {
                     personsRepository.getPersonsByNumber(number).collect{persons ->
-                        binding.characterList.adapter = ApiResponseAdapter(persons.map { person -> CharacterDTO(
+                        characters = persons.map { person -> CharacterDTO(
                             name = person.name,
                             culture = person.culture,
                             born = person.born,
                             titles = person.titles?.split(", "),
                             aliases = person.aliases?.split(", "),
-                            playedBy = person.playedBy?.split(", ")
-                        ) })
+                            playedBy = person.playedBy?.split(", "))
+                        }
+                        binding.characterList.adapter = ApiResponseAdapter(characters)
                     }
                 }
             }
