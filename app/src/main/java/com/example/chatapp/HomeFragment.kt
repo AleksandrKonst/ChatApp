@@ -88,14 +88,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 characters = ktorApi.getCharacters(number)
                 binding.characterList.adapter = ApiResponseAdapter(characters)
 
-                personsRepository.insertPersons(characters.map { character -> Person(
+                personsRepository.insertPersons(characters.map { characterDTO -> Person(
                     number = number,
-                    name = character.name,
-                    culture = character.culture,
-                    born = character.born,
-                    titles = character.titles?.joinToString(", "),
-                    aliases = character.aliases?.joinToString(", "),
-                    playedBy = character.playedBy?.joinToString(", ")
+                    name = characterDTO.name,
+                    culture = characterDTO.culture,
+                    born = characterDTO.born,
+                    titles = characterDTO.titles?.joinToString(", "),
+                    aliases = characterDTO.aliases?.joinToString(", "),
+                    playedBy = characterDTO.playedBy?.joinToString(", ")
                 ) })
             }
             else {
