@@ -44,7 +44,7 @@ class KtorRepository : IKtorRepository {
         }
     }
 
-    override suspend fun getCharacters(): List<CharacterDTO> {
+    override suspend fun getCharacters(number: Int): List<CharacterDTO> {
         return try {
             client.get {
                 url {
@@ -52,7 +52,7 @@ class KtorRepository : IKtorRepository {
                     protocol = URLProtocol.HTTPS
                     contentType(ContentType.Application.Json)
                     path("api/characters")
-                    parameters.append("page", "11")
+                    parameters.append("page", "$number")
                     parameters.append("pageSize", "50")
                 }
             }.let { response ->

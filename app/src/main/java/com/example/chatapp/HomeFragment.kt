@@ -23,6 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val TAG : String = "HomeFragment"
     private val fileName : String = "characterList_11.txt"
     private var _binding: FragmentHomeBinding? = null
+    private var number:Int  = 11;
     private val binding get() = _binding!!
     private var _ktorApi: KtorRepository? = null
     private val ktorApi get() = _ktorApi!!
@@ -71,13 +72,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             this.findNavController().navigate(action)
         }
 
+        binding.sendButton.setOnClickListener {
+            number = binding.numberText.text.toString().toIntOrNull()?: 11
+            loadData(number)
+        }
+
+        loadData(number)
+
+        Log.d(TAG, "onViewCreated")
+    }
+
+    private fun loadData(number: Int){
         lifecycleScope.launch {
-            if (!personsRepository.checkPersonInDatabase(11)){
-                characters = ktorApi.getCharacters()
+            if (!personsRepository.checkPersonInDatabase(number)){
+                characters = ktorApi.getCharacters(number)
                 binding.characterList.adapter = ApiResponseAdapter(characters)
 
                 personsRepository.insertPersons(characters.map { character -> Person(
-                    number = 11,
+                    number = number,
                     name = character.name,
                     culture = character.culture,
                     born = character.born,
@@ -87,7 +99,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ) })
             }
             else {
-                characters = personsRepository.getPersonsByNumber(11).map { person ->  CharacterDTO(
+                characters = personsRepository.getPersonsByNumber(number).map { person ->  CharacterDTO(
                     name = person.name,
                     culture = person.culture,
                     born = person.born,
@@ -98,8 +110,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 binding.characterList.adapter = ApiResponseAdapter(characters)
             }
         }
-
-        Log.d(TAG, "onViewCreated")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -36,7 +36,7 @@ class ApiResponseAdapter(private var items: List<CharacterDTO>) :
                 cultureTextView.text = "[culture] " + if (characterDTO.culture != "") characterDTO.culture else "Нет данных"
                 bornTextView.text = "[born] " + if (characterDTO.born != "") characterDTO.born else "Нет данных"
                 titlesTextView.text = "[titles] " + if (characterDTO.aliases!!.joinToString(", ") != "") characterDTO.aliases!!.joinToString(", ") else "Нет данных"
-                aliasesTextView.text = "[aliases] " + if (characterDTO.titles!!.joinToString(", ") != "") characterDTO.titles.joinToString(", ") else "Нет данных"
+                aliasesTextView.text = "[aliases] " + if (characterDTO.titles!!.joinToString(", ") != "") characterDTO.titles!!.joinToString(", ") else "Нет данных"
                 playedByNameTextView.text = "[playedBy] " + if (characterDTO.playedBy!!.joinToString(", ") != "") characterDTO.playedBy!!.joinToString(", ") else "Нет данных"
             }
         }
