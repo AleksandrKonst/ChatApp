@@ -14,11 +14,16 @@ interface  PersonDao {
     @Query("SELECT * FROM person WHERE uid IN (:personIds)")
     fun loadAllByIds(personIds: IntArray): List<Person>
 
-    @Query("SELECT * FROM person WHERE name LIKE :first LIMIT 1")
-    fun findByName(first: String): Person
+    @Query("SELECT * FROM person WHERE number = :first")
+    fun findByNumber(first: Int): List<Person>
+
+    @Query("SELECT COUNT(*) FROM person WHERE number = :first")
+    fun checkValue(first: Int): Int
 
     @Insert
-    fun insertAll(vararg persons: Person)
+    fun insert(vararg person: Person)
+    @Insert
+    fun insertAll(person: List<Person>)
 
     @Delete
     fun delete(person: Person)

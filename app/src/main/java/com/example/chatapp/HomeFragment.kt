@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.chatapp.Data.CharacterDTO
+import com.example.chatapp.Models.Entity.Person
 import com.example.chatapp.Models.getDatabase
 import com.example.chatapp.Presentation.ApiResponseAdapter
 import com.example.chatapp.Repository.PersonRepository
@@ -25,8 +26,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding get() = _binding!!
     private var _ktorApi: KtorRepository? = null
     private val ktorApi get() = _ktorApi!!
-    private lateinit var users : List<CharacterDTO>
-    private val personsRepository = PersonRepository(getDatabase(requireContext()))
+    private lateinit var characters : List<CharacterDTO>
+    private lateinit var personsRepository : PersonRepository
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +37,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _ktorApi = KtorRepository()
+        personsRepository = PersonRepository(getDatabase(requireContext()))
         val view = binding.root
         return view
     }
@@ -55,10 +58,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.loadButton.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                StorageService.saveToDownloads(requireContext(), fileName, users.joinToString("; "))
+                StorageService.saveToDownloads(requireContext(), fileName, characters.joinToString("; "))
             }
             else {
-                StorageService.saveToDownloads(fileName, users.joinToString("; "))
+                StorageService.saveToDownloads(fileName, characters.joinToString("; "))
             }
             binding.load.visibility = View.INVISIBLE
         }
@@ -69,9 +72,33 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         lifecycleScope.launch {
-            users = ktorApi.getCharacters()
-            binding.characterList.adapter = ApiResponseAdapter(users)
+            if (!personsRepository.checkPersonInDatabase(11)){
+                characters = ktorApi.getCharacters()
+                binding.characterList.adapter = ApiResponseAdapter(characters)
+
+                personsRepository.insertPersons(characters.map { character -> Person(
+                    number = 11,
+                    name = character.name,
+                    culture = character.culture,
+                    born = character.born,
+                    titles = character.titles?.joinToString(", "),
+                    aliases = character.aliases?.joinToString(", "),
+                    playedBy = character.playedBy?.joinToString(", ")
+                ) })
+            }
+            else {
+                characters = personsRepository.getPersonsByNumber(11).map { person ->  CharacterDTO(
+                    name = person.name,
+                    culture = person.culture,
+                    born = person.born,
+                    titles = person.titles?.split(", "),
+                    aliases = person.aliases?.split(", "),
+                    playedBy = person.playedBy?.split(", ")
+                ) }
+                binding.characterList.adapter = ApiResponseAdapter(characters)
+            }
         }
+
         Log.d(TAG, "onViewCreated")
     }
 
