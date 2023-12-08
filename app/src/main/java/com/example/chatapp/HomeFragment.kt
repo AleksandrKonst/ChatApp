@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import com.example.chatapp.Data.CharacterDTO
 import com.example.chatapp.Models.Entity.Person
@@ -17,6 +18,8 @@ import com.example.chatapp.Repository.PersonRepository
 import com.example.chatapp.Service.Network.KtorRepository
 import com.example.chatapp.Service.StorageService
 import com.example.chatapp.databinding.FragmentHomeBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -29,6 +32,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val ktorApi get() = _ktorApi!!
     private lateinit var characters : List<CharacterDTO>
     private lateinit var personsRepository : PersonRepository
+    private var job : Job? = null
 
 
     override fun onCreateView(
@@ -83,6 +87,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun loadData(number: Int){
+        job?.cancel()
         lifecycleScope.launch {
             if (!personsRepository.checkPersonInDatabase(number)){
                 characters = ktorApi.getCharacters(number)
@@ -99,15 +104,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ) })
             }
             else {
-                characters = personsRepository.getPersonsByNumber(number).map { person ->  CharacterDTO(
-                    name = person.name,
-                    culture = person.culture,
-                    born = person.born,
-                    titles = person.titles?.split(", "),
-                    aliases = person.aliases?.split(", "),
-                    playedBy = person.playedBy?.split(", ")
-                ) }
-                binding.characterList.adapter = ApiResponseAdapter(characters)
+                job = lifecycleScope.launch {
+                    personsRepository.getPersonsByNumber(number).collect{persons ->
+                        binding.characterList.adapter = ApiResponseAdapter(persons.map { person -> CharacterDTO(
+                            name = person.name,
+                            culture = person.culture,
+                            born = person.born,
+                            titles = person.titles?.split(", "),
+                            aliases = person.aliases?.split(", "),
+                            playedBy = person.playedBy?.split(", ")
+                        ) })
+                    }
+                }
             }
         }
     }

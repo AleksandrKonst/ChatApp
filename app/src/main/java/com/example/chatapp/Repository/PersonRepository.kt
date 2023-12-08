@@ -1,8 +1,10 @@
 package com.example.chatapp.Repository
 
+import androidx.lifecycle.LiveData
 import com.example.chatapp.Models.AppDatabase
 import com.example.chatapp.Models.Entity.Person
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class PersonRepository(private val database: AppDatabase) {
@@ -11,7 +13,7 @@ class PersonRepository(private val database: AppDatabase) {
             database.personDao.getAll()
         }
     }
-    suspend fun getPersonsByNumber(number: Int): List<Person> {
+    suspend fun getPersonsByNumber(number: Int): Flow<List<Person>> {
         return withContext(Dispatchers.IO) {
             database.personDao.findByNumber(number)
         }

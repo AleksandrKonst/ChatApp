@@ -1,11 +1,13 @@
 package com.example.chatapp.Models.DAO
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.chatapp.Models.Entity.Person
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface  PersonDao {
@@ -14,7 +16,7 @@ interface  PersonDao {
     @Query("SELECT * FROM person WHERE uid IN (:personIds)")
     fun getAllByIds(personIds: IntArray): List<Person>
     @Query("SELECT * FROM person WHERE number = :first")
-    fun findByNumber(first: Int): List<Person>
+    fun findByNumber(first: Int): Flow<List<Person>>
     @Query("SELECT COUNT(*) FROM person WHERE number = :first")
     fun checkValue(first: Int): Int
 
