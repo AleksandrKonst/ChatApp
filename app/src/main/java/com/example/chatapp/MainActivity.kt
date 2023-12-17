@@ -2,6 +2,7 @@ package com.example.chatapp
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.chatapp.Service.ForegroundService.NotificationService
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -23,5 +25,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 0
             )
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val serviceIntent = Intent(this, NotificationService::class.java)
+        this.startService(serviceIntent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val serviceIntent = Intent(this, NotificationService::class.java)
+        this.stopService(serviceIntent)
     }
 }

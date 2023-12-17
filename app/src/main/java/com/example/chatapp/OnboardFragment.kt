@@ -57,16 +57,10 @@ class OnboardFragment : Fragment(R.layout.fragment_onboard) {
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause")
-
-        val serviceIntent = Intent(requireContext(), NotificationService::class.java)
-        requireContext().startService(serviceIntent)
     }
 
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume")
-
-        val serviceIntent = Intent(requireContext(), NotificationService::class.java)
-        requireContext().stopService(serviceIntent)
     }
 }
